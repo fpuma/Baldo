@@ -1,3 +1,3 @@
 # Baldo
-A resource management library
+An asset management library - WIP
 
