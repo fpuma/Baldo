@@ -14,6 +14,8 @@ namespace Example.Projects
             base.ConfigureAll(conf, target);
             conf.IncludePrivatePaths.Add(@"\private");
             conf.IncludePaths.Add(@"\public");
+
+            conf.AddPublicDependency<Utils>(target);
         }
     }
 }
