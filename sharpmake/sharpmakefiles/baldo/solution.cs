@@ -6,7 +6,7 @@ namespace Example.Solutions
     public class BaldoSolution : Puma.SharpmakeBase.ISolution
     {
         public BaldoSolution()
-            : base("BaldoSolution")
+            : base("Baldo")
         {}
 
         public override void ConfigureAll(Configuration conf, Sharpmake.Target target)

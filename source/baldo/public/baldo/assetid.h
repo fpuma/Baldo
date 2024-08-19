@@ -9,4 +9,4 @@ namespace puma::baldo
     class AssetId;
 }
 
-DECLARE_GENERIC_ID(puma::baldo::AssetId, puma::u32, puma::kMaxU32);
+DECLARE_GENERIC_ID(puma::baldo::AssetId, puma::u64, puma::kMaxU64);
