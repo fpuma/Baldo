@@ -58,14 +58,53 @@ namespace puma::baldo
         }
 
         template<class AssetType>
-        std::shared_ptr<AssetType> requestResource(AssetId _id) 
+        std::shared_ptr<const AssetType> requestResource(AssetId _id) 
         {
+            u64 typePos = kMaxU64;
+            u64 assetPos = kMaxU64;
+            readId(_id, typePos, assetPos);
+
+            assert(typePos < m_assets.size()); //AssetId is invalid
+            
+            if (typePos < m_assets.size())
+            {
+                TypeEntry& typeEntry = m_assets[typePos];
+                std::type_index requestedTypeIndex = std::type_index(typeid(AssetType));
+
+                assert(requestedTypeIndex == typeEntry.typeIndex); // Requested type does not match the ID type
+
+                if (requestedTypeIndex == typeEntry.typeIndex)
+                {
+                    assert(assetPos < typeEntry.assets.size()); //AssetId is invalid
+
+                    if (assetPos < typeEntry.assets.size())
+                    {
+                        AssetEntry& assetEntry = typeEntry.assets[assetPos];
+                    
+                        if (nullptr != assetEntry.asset) return std::static_pointer_cast<const AssetType>(assetEntry.asset);
+                        else
+                        {
+                            assetEntry.asset = assetEntry.assetLoader();
+                            assert(nullptr != assetEntry.asset);
+                            return std::static_pointer_cast<const AssetType>(assetEntry.asset);
+                        }
+                    }
+                }
+            }
             return nullptr;
         }
 
 
     private:
         
+        void readId(AssetId _id, u64& _typePos, u64& _assetPos)
+        {
+            u64 mask = kMaxU64;
+            mask = mask >> (64 - kAssetCountBitSize);
+            _assetPos = _id.value() & mask;
+            _typePos = _id.value() >> kAssetCountBitSize;
+        }
+
         using BoundType = std::function<std::shared_ptr<IAsset>()>;
 
         struct AssetEntry

@@ -16,10 +16,18 @@ int main()
 
     //std::bitset<64>(id0.value())
 
-    std::cout << std::hex << id0.value() << std::endl;
-    std::cout << std::hex << id1.value() << std::endl;
-    std::cout << std::hex << id2.value() << std::endl;
-    std::cout << std::hex << id3.value() << std::endl;
+    std::cout << std::hex << id0.value() << std::dec << std::endl;
+    std::cout << std::hex << id1.value() << std::dec << std::endl;
+    std::cout << std::hex << id2.value() << std::dec << std::endl;
+    std::cout << std::hex << id3.value() << std::dec << std::endl;
+
+    auto asset0 = assetManager.requestResource<baldo::TestAsset>(id0);
+
+    std::cout << "Asset0 number: " << asset0->number << std::endl;
+
+    auto asset0b = assetManager.requestResource<baldo::TestAsset>(id0);
+
+    std::cout << "Asset0b number: " << asset0b->number << std::endl;
 
     return 0;
 }

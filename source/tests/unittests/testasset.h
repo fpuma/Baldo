@@ -27,7 +27,6 @@ namespace puma::baldo
     {
         std::shared_ptr<TestAsset> result = std::make_shared<TestAsset>();
         result->number = num;
-        result->num2 = num;
         return result;
     }
 
@@ -36,7 +35,6 @@ namespace puma::baldo
     {
         std::shared_ptr<TestAsset2> result = std::make_shared<TestAsset2>();
         result->number = num;
-        result->num2 = num;
         return result;
     }
 }

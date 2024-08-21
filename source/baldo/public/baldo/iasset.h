@@ -10,8 +10,6 @@ namespace puma::baldo
     public:
         IAsset() = default;
         virtual ~IAsset() {}
-
-        int num2 = 0;
     };
 
     template<class AssetType, class... Args>
