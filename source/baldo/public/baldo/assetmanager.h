@@ -94,6 +94,22 @@ namespace puma::baldo
             return nullptr;
         }
 
+        void runGarbageCollector()
+        {
+            for (TypeEntry& typeEntry : m_assets)
+            {
+                for (AssetEntry& assetEntry : typeEntry.assets)
+                {
+                    if (nullptr == assetEntry.asset) continue;
+
+                    long useCount = assetEntry.asset.use_count();
+                    if (useCount == 1)
+                    {
+                        assetEntry.asset.reset();
+                    }
+                }
+            }
+        }
 
     private:
         

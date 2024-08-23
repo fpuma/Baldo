@@ -29,5 +29,10 @@ int main()
 
     std::cout << "Asset0b number: " << asset0b->number << std::endl;
 
+    asset0.reset();
+    asset0b.reset();
+
+    assetManager.runGarbageCollector();
+
     return 0;
 }
