@@ -1,40 +1,44 @@
 #pragma once
 
 #include <baldo/iasset.h>
+#include <string>
 
-namespace puma::baldo
+using namespace puma;
+
+class TestAsset0 : public baldo::IAsset
 {
-    class TestAsset : public IAsset
-    {
-    public:
-        TestAsset() {}
-        virtual ~TestAsset() {}
+public:
+    TestAsset0() {}
+    virtual ~TestAsset0() {}
 
-        int number = 0;
-    };
+    int number = 0;
+};
 
-    class TestAsset2 : public IAsset
-    {
-    public:
-        TestAsset2() {}
-        virtual ~TestAsset2() {}
+template<>
+std::shared_ptr<TestAsset0> baldo::loadAsset<TestAsset0, int>(int num)
+{
+    std::shared_ptr<TestAsset0> result = std::make_shared<TestAsset0>();
+    result->number = num;
+    return result;
+}
 
-        int number = 0;
-    };
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-    template<>
-    std::shared_ptr<TestAsset> loadAsset<TestAsset, int>(int num)
-    {
-        std::shared_ptr<TestAsset> result = std::make_shared<TestAsset>();
-        result->number = num;
-        return result;
-    }
+class TestAsset1 : public baldo::IAsset
+{
+public:
+    TestAsset1() {}
+    virtual ~TestAsset1() {}
 
-    template<>
-    std::shared_ptr<TestAsset2> loadAsset<TestAsset2, int>(int num)
-    {
-        std::shared_ptr<TestAsset2> result = std::make_shared<TestAsset2>();
-        result->number = num;
-        return result;
-    }
+    std::string name = "";
+};
+
+template<>
+std::shared_ptr<TestAsset1> baldo::loadAsset<TestAsset1, std::string>(std::string name)
+{
+    std::shared_ptr<TestAsset1> result = std::make_shared<TestAsset1>();
+    result->name = name;
+    return result;
 }
