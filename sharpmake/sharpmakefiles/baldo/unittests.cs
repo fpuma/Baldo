@@ -1,3 +1,4 @@
+using Puma;
 using System.IO;
 
 
@@ -15,6 +16,7 @@ namespace Example.Projects
         {
             base.ConfigureAll(conf, target);
             conf.AddPrivateDependency<Baldo>(target);
+            conf.AddPrivateDependency<GoogleTest>(target);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.IO;
 
 //Examples
 [module: Sharpmake.Include(@"..\baldo\*")]
+[module: Sharpmake.Include(@"..\extern\*")]
 
 public static class SharpmakeMainClass
 {
