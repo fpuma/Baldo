@@ -50,11 +50,7 @@ namespace puma::baldo
             assetPos = itFoundAssetType->assets.size();
             itFoundAssetType->assets.push_back({ assetLoader , nullptr });
 
-            u64 tempId = typePos;
-            tempId = tempId << kAssetCountBitSize;
-            tempId += assetPos;
-            
-            return AssetId(tempId);
+            return buildId(typePos, assetPos);
         }
 
         template<class AssetType>
@@ -113,6 +109,15 @@ namespace puma::baldo
 
     private:
         
+        AssetId buildId(u64 _typePos, u64 _assetPos)
+        {
+            u64 result = _typePos;
+            result = result << kAssetCountBitSize;
+            result += _assetPos;
+
+            return AssetId(result);
+        }
+
         void readId(AssetId _id, u64& _typePos, u64& _assetPos)
         {
             u64 mask = kMaxU64;
