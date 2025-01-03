@@ -17,8 +17,8 @@ namespace puma::baldo
     {
     public:
 
-        AssetManager();
-        virtual ~AssetManager();
+        AssetManager() = default;
+        ~AssetManager() = default;
 
         template<class AssetType, class... Args>
         AssetId registerResource(Args... _args) 
@@ -31,7 +31,7 @@ namespace puma::baldo
             
             u64 typePos = kMaxU64;
             u64 assetPos = kMaxU64;
-            BoundType assetLoader = [=]() -> std::shared_ptr<IAsset>
+            BoundLoaderCallback assetLoader = [=]() -> std::shared_ptr<IAsset>
                 {
                     return std::static_pointer_cast<IAsset>(loadAsset<AssetType, Args...>(_args...));
                 };
@@ -126,11 +126,11 @@ namespace puma::baldo
             _typePos = _id.value() >> kAssetCountBitSize;
         }
 
-        using BoundType = std::function<std::shared_ptr<IAsset>()>;
+        using BoundLoaderCallback = std::function<std::shared_ptr<IAsset>()>;
 
         struct AssetEntry
         {
-            BoundType assetLoader;
+            BoundLoaderCallback assetLoader;
             std::shared_ptr<IAsset> asset;
         };
 
